@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0a1628;
+  --navy2: #112240;
+  --gold: #c9a84c;
+  --gold2: #e8c975;
+  --cream: #f7f4ef;
+  --light: #f0ece4;
+  --gray: #6b7280;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #fff;
+  overflow-x: hidden;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    var(--gold) 0%,
+    var(--gold) var(--range-val, 50%),
+    #ddd var(--range-val, 50%),
+    #ddd 100%
+  );
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 3px solid var(--gold);
+  cursor: pointer;
+}
+
+:root {
+  --font-playfair: 'Playfair Display';
+  --font-dm: 'DM Sans';
+}

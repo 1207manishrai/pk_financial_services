@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 10 540 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGradW" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d680"/>
+      <stop offset="50%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#eccb73"/>
+    </linearGradient>
+  </defs>
+
+  <!-- PKF Emblem Group -->
+  <g transform="translate(0, 0)">
+    <!-- Letters P, K, F -->
+    <g font-family="'Playfair Display', 'Times New Roman', serif" font-weight="900">
+      <!-- P (White) -->
+      <text x="135" y="165" font-size="155" fill="#ffffff" letter-spacing="-4">P</text>
+      <!-- K (Gold) -->
+      <text x="248" y="165" font-size="155" fill="url(#goldGradW)" letter-spacing="-4">K</text>
+      <!-- F (White) -->
+      <text x="360" y="165" font-size="155" fill="#ffffff">F</text>
+    </g>
+
+    <!-- Bar Chart under P -->
+    <g fill="#ffffff">
+      <rect x="188" y="138" width="16" height="32" rx="3" />
+      <rect x="210" y="116" width="16" height="54" rx="3" />
+      <rect x="232" y="88" width="16" height="82" rx="3" />
+    </g>
+
+    <!-- Upward Swoosh Arrow -->
+    <path d="M 125 188 Q 280 234 465 106" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+    <path d="M 130 196 Q 285 242 470 114" fill="none" stroke="url(#goldGradW)" stroke-width="7" stroke-linecap="round"/>
+    <!-- Arrow Head (Gold) -->
+    <polygon points="480,98 448,118 464,136" fill="url(#goldGradW)"/>
+  </g>
+
+  <!-- Main Title: PK FINANCIAL SERVICES -->
+  <text x="300" y="272" text-anchor="middle" font-family="'Playfair Display', 'Georgia', serif" font-size="36" font-weight="900" fill="#ffffff" letter-spacing="2">
+    PK FINANCIAL SERVICES
+  </text>
+
+  <!-- Divider Line 1 -->
+  <line x1="40" y1="298" x2="560" y2="298" stroke="#c9a84c" stroke-width="2.5"/>
+
+  <!-- 3 Sub-Icons & Labels -->
+  <g transform="translate(0, 310)">
+    <!-- Sub Icon 1: FINANCIAL -->
+    <g transform="translate(160, 32)">
+      <circle cx="0" cy="0" r="26" fill="rgba(255,255,255,0.05)" stroke="#ffffff" stroke-width="3"/>
+      <path d="M-11 9 L-11 0 M-3 9 L-3 -7 M5 9 L5 -13 M13 9 L13 1 M-13 2 L-2 -9 L5 -2 L13 -13" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="800" fill="#ffffff" letter-spacing="1">FINANCIAL</text>
+    </g>
+
+    <!-- Separator 1 -->
+    <line x1="230" y1="12" x2="230" y2="52" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+
+    <!-- Sub Icon 2: INVESTMENT -->
+    <g transform="translate(300, 32)">
+      <circle cx="0" cy="0" r="26" fill="rgba(201,168,76,0.1)" stroke="url(#goldGradW)" stroke-width="3"/>
+      <!-- Plant & Coins Symbol -->
+      <path d="M0 13 L0 0 M-9 -4 Q-11 -15 0 -13 Q11 -15 9 -4 Z" fill="url(#goldGradW)"/>
+      <circle cx="-7" cy="9" r="4.5" fill="url(#goldGradW)"/>
+      <circle cx="2" cy="11" r="4.5" fill="url(#goldGradW)"/>
+      <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="800" fill="#ffffff" letter-spacing="1">INVESTMENT</text>
+    </g>
+
+    <!-- Separator 2 -->
+    <line x1="370" y1="12" x2="370" y2="52" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+
+    <!-- Sub Icon 3: MFD -->
+    <g transform="translate(440, 32)">
+      <circle cx="0" cy="0" r="26" fill="rgba(255,255,255,0.05)" stroke="#ffffff" stroke-width="3"/>
+      <!-- User Silhouette -->
+      <circle cx="0" cy="-6" r="7.5" fill="#ffffff"/>
+      <path d="M-14 15 C-14 6, 14 6, 14 15 Z" fill="#ffffff"/>
+      <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="12.5" font-weight="800" fill="#ffffff" letter-spacing="1">MFD</text>
+    </g>
+  </g>
+
+  <!-- Tagline: INVEST SMARTLY -->
+  <g transform="translate(300, 440)">
+    <line x1="-200" y1="-6" x2="-125" y2="-6" stroke="#c9a84c" stroke-width="2.5"/>
+    <text x="0" y="0" text-anchor="middle" font-family="'Playfair Display', serif" font-size="20" font-weight="800" fill="url(#goldGradW)" letter-spacing="7">
+      INVEST SMARTLY
+    </text>
+    <line x1="125" y1="-6" x2="200" y2="-6" stroke="#c9a84c" stroke-width="2.5"/>
+  </g>
+
+  <!-- AMFI Registration Subtext -->
+  <g transform="translate(300, 474)">
+    <line x1="-230" y1="-4" x2="-175" y2="-4" stroke="#c9a84c" stroke-width="1.5"/>
+    <text x="0" y="0" text-anchor="middle" font-family="sans-serif" font-size="11.5" font-weight="700" fill="rgba(255,255,255,0.85)" letter-spacing="2">
+      AMFI-REGISTERED MUTUAL FUND DISTRIBUTOR
+    </text>
+    <line x1="175" y1="-4" x2="230" y2="-4" stroke="#c9a84c" stroke-width="1.5"/>
+  </g>
+</svg>
