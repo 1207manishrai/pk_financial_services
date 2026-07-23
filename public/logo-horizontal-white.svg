@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 150" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGradHW" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d680"/>
+      <stop offset="50%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#eccb73"/>
+    </linearGradient>
+  </defs>
+
+  <!-- PKF Emblem Group (Scaled and shifted to left) -->
+  <g transform="translate(10, 5) scale(0.58)">
+    <!-- Letters P, K, F -->
+    <g font-family="'Playfair Display', 'Times New Roman', serif" font-weight="900">
+      <!-- P (White) -->
+      <text x="50" y="165" font-size="155" fill="#ffffff" letter-spacing="-4">P</text>
+      <!-- K (Gold) -->
+      <text x="163" y="165" font-size="155" fill="url(#goldGradHW)" letter-spacing="-4">K</text>
+      <!-- F (White) -->
+      <text x="275" y="165" font-size="155" fill="#ffffff">F</text>
+    </g>
+
+    <!-- Bar Chart under P -->
+    <g fill="#ffffff">
+      <rect x="103" y="138" width="16" height="32" rx="3" />
+      <rect x="125" y="116" width="16" height="54" rx="3" />
+      <rect x="147" y="88" width="16" height="82" rx="3" />
+    </g>
+
+    <!-- Upward Swoosh Arrow -->
+    <path d="M 40 188 Q 195 234 380 106" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+    <path d="M 45 196 Q 200 242 385 114" fill="none" stroke="url(#goldGradHW)" stroke-width="7" stroke-linecap="round"/>
+    <!-- Arrow Head (Gold) -->
+    <polygon points="395,98 363,118 379,136" fill="url(#goldGradHW)"/>
+  </g>
+
+  <!-- Text Group (Shifted to right and padded) -->
+  <g transform="translate(230, 0)">
+    <!-- Main Title: PK FINANCIAL SERVICES -->
+    <text x="0" y="60" font-family="'Playfair Display', 'Georgia', serif" font-size="29" font-weight="900" fill="#ffffff" letter-spacing="1">
+      PK FINANCIAL SERVICES
+    </text>
+
+    <!-- Divider Line -->
+    <line x1="0" y1="78" x2="350" y2="78" stroke="#c9a84c" stroke-width="2.5"/>
+
+    <!-- Tagline: INVEST SMARTLY -->
+    <text x="0" y="104" font-family="'Playfair Display', serif" font-size="15" font-weight="800" fill="url(#goldGradHW)" letter-spacing="5">
+      INVEST SMARTLY
+    </text>
+
+    <!-- Registration Subtext -->
+    <text x="0" y="126" font-family="sans-serif" font-size="10.5" font-weight="700" fill="rgba(255,255,255,0.8)" letter-spacing="1">
+      AMFI-REGISTERED MUTUAL FUND DISTRIBUTOR
+    </text>
+  </g>
+</svg>

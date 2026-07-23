@@ -46,8 +46,8 @@ export default function Home() {
       </div>
 
       <Testimonials />
-      <Contact />
       <News />
+      <Contact />
       <Footer />
 
       {/* Global Enquiry Modal */}

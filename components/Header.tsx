@@ -36,7 +36,7 @@ export default function Header() {
       <div style={{
         maxWidth: 1200,
         margin: "auto",
-        padding: scrolled ? "12px 24px" : "18px 24px",
+        padding: scrolled ? "8px 24px" : "12px 24px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -48,7 +48,7 @@ export default function Header() {
             src="/logo.svg"
             alt="PK Financial Services Logo"
             style={{
-              height: scrolled ? 46 : 54,
+              height: scrolled ? 75 : 95,
               maxWidth: 240,
               width: "auto",
               objectFit: "contain",

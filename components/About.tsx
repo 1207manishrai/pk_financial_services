@@ -34,6 +34,48 @@ export default function About() {
               </li>
             ))}
           </ul>
+          {/* Founder Spotlight Card */}
+          <div style={{
+            background: "linear-gradient(135deg, rgba(10, 22, 40, 0.02) 0%, rgba(201, 168, 76, 0.04) 100%)",
+            borderLeft: "4px solid var(--gold)",
+            borderTop: "1px solid rgba(201,168,76,0.1)",
+            borderRight: "1px solid rgba(201,168,76,0.1)",
+            borderBottom: "1px solid rgba(201,168,76,0.1)",
+            borderRadius: "8px",
+            padding: "18px 20px",
+            marginBottom: "28px",
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.01)"
+          }}>
+            <div style={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              background: "var(--navy)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "18px",
+              fontWeight: 700,
+              color: "var(--gold)",
+              boxShadow: "0 4px 10px rgba(10,22,40,0.15)",
+              flexShrink: 0
+            }}>
+              PK
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                <span style={{ fontSize: "16px", fontWeight: 700, color: "var(--navy)" }}>Praful Kumar</span>
+                <span style={{ fontSize: "10px", fontWeight: 700, background: "rgba(201, 168, 76, 0.15)", color: "var(--navy)", padding: "2px 8px", borderRadius: "10px", textTransform: "uppercase" }}>Founder</span>
+              </div>
+              <p style={{ fontSize: "13px", color: "var(--gray)", margin: "4px 0 2px" }}>AMFI Registered Mutual Fund Distributor</p>
+              <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--gold)" }}>
+                ARN-253947 <span style={{ color: "var(--gray)", fontWeight: "normal", margin: "0 4px" }}>|</span> AMFI Registered MFD
+              </div>
+            </div>
+          </div>
           <a href="#contact" style={{ background: "var(--gold)", color: "var(--navy)", padding: "13px 28px", borderRadius: 5, fontSize: 14, fontWeight: 700, textDecoration: "none", display: "inline-block" }}>Know More →</a>
         </div>
       </div>

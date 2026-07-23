@@ -17,6 +17,11 @@ export default function Footer() {
               <img src="/logo-white.svg" alt="PK Financial Services Logo" style={{ height: 175, maxWidth: 420, width: "auto", objectFit: "contain" }} />
             </Link>
             <p style={{ fontSize: 13.5, lineHeight: 1.8 }}>We are committed to helping every Indian household achieve financial freedom through disciplined investing, smart tax planning, and the right insurance coverage.</p>
+            <div style={{ marginTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 12 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "var(--gold)" }}>Praful Kumar</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", marginTop: 4 }}>AMFI Registered MFD</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>ARN-253947</div>
+            </div>
           </div>
           <div>
             <h4 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 18, paddingBottom: 12, borderBottom: "2px solid var(--gold)", display: "inline-block" }}>Our Services</h4>

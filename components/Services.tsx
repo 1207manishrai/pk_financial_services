@@ -6,6 +6,8 @@ const services = [
   { icon: "📈", bg: "linear-gradient(135deg,#e7fff0,#c8f5dc)", tag: "Investments", title: "Mutual Fund Investments", desc: "Expert guidance on equity, debt, hybrid, and ELSS funds. Start SIP from just ₹500/month." },
   { icon: "🛡️", bg: "linear-gradient(135deg,#fff0e7,#ffd9bb)", tag: "Insurance", title: "Life & Health Insurance", desc: "Compare and buy the best term life, health, and ULIP plans with complete claim support." },
   { icon: "💰", bg: "linear-gradient(135deg,#f0e7ff,#e0cfff)", tag: "Tax", title: "Tax Saving Solutions", desc: "Smart ELSS investments, NPS deductions, and 80C planning to minimise your tax burden." },
+  { icon: "🏢", bg: "linear-gradient(135deg,#e2e8f0,#cbd5e1)", tag: "Investments", title: "Bonds & Fixed Deposits", desc: "Secure your capital with guaranteed returns. Invest in high-yield corporate FDs, government bonds, and sovereign gold bonds (SGB)." },
+  { icon: "🚗", bg: "linear-gradient(135deg,#ffe4e6,#fecdd3)", tag: "Insurance", title: "General Insurance", desc: "Protect what matters most. Get comprehensive insurance policies for motor vehicles, home property, and business liabilities." },
 ];
 
 interface ServicesProps {
