@@ -387,6 +387,13 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
           color: var(--gold) !important;
         }
 
+        @media(min-width: 901px) {
+          .hero-cards {
+            margin-top: -64px !important;
+            transform: translateY(-40px) !important;
+          }
+        }
+
         @media(max-width:1100px){
           .hero-main-container {
             grid-template-columns: 1fr !important;
