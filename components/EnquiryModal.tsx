@@ -214,7 +214,7 @@ export default function EnquiryModal({ isOpen, onClose, defaultService = "" }: E
                 <input
                   type="text"
                   name="firstName"
-                  placeholder="Ravi"
+                  placeholder=""
                   value={formData.firstName}
                   onChange={handleChange}
                   required
@@ -226,7 +226,7 @@ export default function EnquiryModal({ isOpen, onClose, defaultService = "" }: E
                 <input
                   type="text"
                   name="lastName"
-                  placeholder="Kumar"
+                  placeholder=""
                   value={formData.lastName}
                   onChange={handleChange}
                   style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #ddd6ca", borderRadius: 6, fontSize: 13.5, color: "#1e293b", background: "#fff", outline: "none" }}
@@ -240,7 +240,7 @@ export default function EnquiryModal({ isOpen, onClose, defaultService = "" }: E
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="+91 98765 43210"
+                  placeholder=""
                   value={formData.phone}
                   onChange={handleChange}
                   required
@@ -252,7 +252,7 @@ export default function EnquiryModal({ isOpen, onClose, defaultService = "" }: E
                 <input
                   type="email"
                   name="email"
-                  placeholder="ravi@email.com"
+                  placeholder=""
                   value={formData.email}
                   onChange={handleChange}
                   style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #ddd6ca", borderRadius: 6, fontSize: 13.5, color: "#1e293b", background: "#fff", outline: "none" }}

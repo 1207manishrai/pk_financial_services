@@ -145,12 +145,12 @@ export default function Contact() {
                   </div>
                 )}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 16 }} className="form-row">
-                  <Field label="First Name *" name="firstName" placeholder="Ravi" value={formData.firstName} onChange={handleChange} required />
-                  <Field label="Last Name" name="lastName" placeholder="Kumar" value={formData.lastName} onChange={handleChange} />
+                  <Field label="First Name *" name="firstName" placeholder="" value={formData.firstName} onChange={handleChange} required />
+                  <Field label="Last Name" name="lastName" placeholder="" value={formData.lastName} onChange={handleChange} />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 16 }} className="form-row">
-                  <Field label="Phone *" name="phone" placeholder="+91 98765 43210" type="tel" value={formData.phone} onChange={handleChange} required />
-                  <Field label="Email" name="email" placeholder="ravi@email.com" type="email" value={formData.email} onChange={handleChange} />
+                  <Field label="Phone *" name="phone" placeholder="" type="tel" value={formData.phone} onChange={handleChange} required />
+                  <Field label="Email" name="email" placeholder="" type="email" value={formData.email} onChange={handleChange} />
                 </div>
                 <div style={{ marginBottom: 16 }}>
                   <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "var(--navy)", textTransform: "uppercase", letterSpacing: .5, marginBottom: 6 }}>Service Interested In *</label>
