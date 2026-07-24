@@ -33,8 +33,8 @@ export default function TopBar() {
         <Link
           href="/admin"
           style={{
-            border: "1px solid rgba(255,255,255,0.3)",
-            color: "#ffffff",
+            background: "#ffffff",
+            color: "var(--navy)",
             padding: "6px 12px",
             borderRadius: 4,
             textDecoration: "none",
@@ -43,15 +43,17 @@ export default function TopBar() {
             display: "inline-flex",
             alignItems: "center",
             gap: 4,
+            boxShadow: "0 2px 6px rgba(0,0,0,.08)",
+            border: "1px solid #e2e8f0",
             transition: "all 0.2s"
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-            e.currentTarget.style.borderColor = "#ffffff";
+            e.currentTarget.style.background = "#f8fafc";
+            e.currentTarget.style.transform = "translateY(-0.5px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+            e.currentTarget.style.background = "#ffffff";
+            e.currentTarget.style.transform = "none";
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 13, height: 13 }} fill="currentColor">

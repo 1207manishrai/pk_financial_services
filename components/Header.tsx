@@ -24,36 +24,42 @@ export default function Header() {
   }, []);
 
   return (
-    <header style={{
-      background: scrolled ? "rgba(255, 255, 255, 0.96)" : "#ffffff",
-      backdropFilter: scrolled ? "blur(12px)" : "none",
-      boxShadow: scrolled ? "0 10px 30px -10px rgba(10,22,40,0.08)" : "0 2px 10px rgba(10,22,40,0.02)",
-      position: "sticky",
-      top: 0,
-      zIndex: 1000,
-      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-      borderBottom: scrolled ? "1px solid rgba(10,22,40,0.04)" : "1px solid #f1f5f9"
-    }}>
+    <header 
+      style={{
+        background: scrolled ? "rgba(255, 255, 255, 0.88)" : "#ffffff",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        boxShadow: scrolled 
+          ? "0 15px 35px -10px rgba(10, 22, 40, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7)" 
+          : "0 2px 10px rgba(10,22,40,0.02)",
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
+        transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
+        borderBottom: scrolled ? "1px solid rgba(10,22,40,0.05)" : "1px solid #f1f5f9",
+        transform: scrolled ? "scale(0.99) translateY(2px)" : "scale(1) translateY(0px)"
+      }} 
+      className="header-floating-card"
+    >
       <div style={{
         maxWidth: 1200,
         margin: "auto",
-        padding: scrolled ? "8px 24px" : "12px 24px",
+        padding: scrolled ? "6px 24px" : "12px 24px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
       }}>
-        {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+        {/* Logo with 3D Perspective Tilt on Hover */}
+        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }} className="logo-container">
           <img
             src="/logo.jpg?v=3"
             alt="PK Financial Services Logo"
             style={{
-              height: scrolled ? 90 : 120,
+              height: scrolled ? 80 : 110,
               maxWidth: 280,
               width: "auto",
               objectFit: "contain",
-              transition: "height 0.3s ease"
+              transition: "height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
             }}
           />
         </Link>
@@ -62,11 +68,11 @@ export default function Header() {
           display: "flex",
           alignItems: "center",
           listStyle: "none",
-          gap: 32,
+          gap: 16,
           margin: 0,
           padding: 0,
           marginRight: "auto",
-          marginLeft: 64
+          marginLeft: 48
         }} className="nav-links-desktop">
           {links.map((l) => (
             <li key={l.label}>
@@ -76,8 +82,12 @@ export default function Header() {
                   color: "var(--navy)",
                   textDecoration: "none",
                   fontSize: 14,
-                  fontWeight: 600,
-                  transition: "color 0.2s ease"
+                  fontWeight: 700,
+                  transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  display: "inline-block",
+                  border: "1px solid transparent"
                 }}
                 className="nav-link-hover"
               >
@@ -86,8 +96,6 @@ export default function Header() {
             </li>
           ))}
         </ul>
-
-        {/* Portal buttons moved to TopBar */}
 
         {/* Mobile Hamburger Menu Toggle */}
         <button
@@ -183,10 +191,10 @@ export default function Header() {
             href="/admin"
             onClick={() => setIsOpen(false)}
             style={{
-              border: "1.5px solid var(--navy)",
+              background: "#ffffff",
               color: "var(--navy)",
               textAlign: "center",
-              padding: "11px",
+              padding: "12px",
               borderRadius: 8,
               textDecoration: "none",
               fontSize: 14,
@@ -194,7 +202,9 @@ export default function Header() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 8
+              gap: 8,
+              border: "1.5px solid #cbd5e1",
+              boxShadow: "0 2px 6px rgba(0,0,0,.05)"
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 15, height: 15 }} fill="currentColor">
@@ -252,17 +262,11 @@ export default function Header() {
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 15, height: 15 }} fill="none">
-              {/* Top-Left facet (orange) */}
               <polygon points="50,5 11,27.5 32,50 50,35" fill="#f97316" />
-              {/* Top-Right facet (dark blue) */}
               <polygon points="50,5 89,27.5 68,50 50,35" fill="#251a70" />
-              {/* Right facet (orange/amber) */}
               <polygon points="89,27.5 89,72.5 68,50" fill="#f58220" />
-              {/* Bottom-Right facet (gold) */}
               <polygon points="89,72.5 50,95 50,65 68,50" fill="#fbb03b" />
-              {/* Bottom-Left facet (yellow) */}
               <polygon points="50,95 11,72.5 32,50 50,65" fill="#f7ec1e" />
-              {/* Left facet (red) */}
               <polygon points="11,72.5 11,27.5 32,50" fill="#ed1c24" />
             </svg>
             NSE Invest
@@ -299,9 +303,36 @@ export default function Header() {
       )}
 
       <style>{`
-        .nav-link-hover:hover {
-          color: var(--gold) !important;
+        /* 3D Perspective Logo Tilt */
+        .logo-container {
+          transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+          transform-style: preserve-3d;
+          perspective: 500px;
         }
+        .logo-container:hover {
+          transform: rotateX(8deg) rotateY(-8deg) scale(1.03);
+        }
+
+        /* 3D Floating Header Scale transition */
+        .header-floating-card {
+          transform-origin: top center;
+        }
+
+        /* 3D Pill Link Pop Effect with corporate gold theme */
+        .nav-link-hover {
+          position: relative;
+        }
+        .nav-link-hover:hover {
+          color: var(--navy) !important;
+          background: rgba(201, 168, 76, 0.1) !important;
+          border-color: rgba(201, 168, 76, 0.3) !important;
+          box-shadow: 0 6px 15px rgba(201, 168, 76, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+          transform: translateY(-2px) scale(1.05);
+        }
+        .nav-link-hover:active {
+          transform: translateY(0px) scale(0.98);
+        }
+
         @media(max-width: 900px) {
           .nav-links-desktop, .actions-desktop {
             display: none !important;

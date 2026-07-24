@@ -2,6 +2,7 @@
 import { useState } from "react";
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
+import MarketTicker from "@/components/MarketTicker";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import CalcStrip from "@/components/CalcStrip";
@@ -28,6 +29,7 @@ export default function Home() {
 
   return (
     <>
+      <MarketTicker />
       <Header />
       <TopBar />
       <Hero onOpenEnquiry={() => handleOpenEnquiry()} />

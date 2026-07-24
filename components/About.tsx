@@ -1,25 +1,167 @@
 "use client";
+
+import { useState, useEffect } from "react";
+
 export default function About() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = ["/about-graphic.png", "/about-graphic-2.png", "/about-graphic-3.png"];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
     <section id="about" style={{ background: "var(--cream)", padding: "80px 24px" }}>
       <div style={{ maxWidth: 1200, margin: "auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="about-grid">
-        <div style={{ position: "relative", height: 400 }} className="about-graphic">
-          <div style={{ position: "absolute", width: "68%", height: 280, top: 0, left: 0, background: "linear-gradient(135deg,var(--navy),#1a3560)", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 20px 60px rgba(10,22,40,.18)" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-              <polyline points="16 7 22 7 22 13"/>
-            </svg>
+        {/* Slideshow 3D graphic block */}
+        <div style={{ position: "relative", height: 420, display: "flex", alignItems: "center", justifyContent: "center" }} className="about-graphic">
+          <div 
+            style={{ 
+              position: "relative", 
+              width: "100%", 
+              height: "100%", 
+              overflow: "hidden", 
+              borderRadius: 16, 
+              boxShadow: "0 20px 40px rgba(10,22,40,0.12)",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease"
+            }}
+            className="slideshow-container"
+          >
+            {slides.map((slide, index) => (
+              <img
+                key={slide}
+                src={slide}
+                alt={`Financial Growth 3D Graphic ${index + 1}`}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  borderRadius: 16,
+                  transition: "opacity 0.8s ease",
+                  opacity: index === currentSlide ? 1 : 0,
+                  zIndex: index === currentSlide ? 1 : 0,
+                  pointerEvents: index === currentSlide ? "auto" : "none"
+                }}
+              />
+            ))}
+
+            {/* Left navigation arrow */}
+            <button
+              onClick={handlePrev}
+              style={{
+                position: "absolute",
+                left: 16,
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "rgba(10, 22, 40, 0.65)",
+                border: "none",
+                color: "#fff",
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10,
+                fontSize: 15,
+                fontWeight: "bold",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "var(--navy)";
+                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "rgba(10, 22, 40, 0.65)";
+                e.currentTarget.style.transform = "translateY(-50%)";
+              }}
+            >
+              ❮
+            </button>
+
+            {/* Right navigation arrow */}
+            <button
+              onClick={handleNext}
+              style={{
+                position: "absolute",
+                right: 16,
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "rgba(10, 22, 40, 0.65)",
+                border: "none",
+                color: "#fff",
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 10,
+                fontSize: 15,
+                fontWeight: "bold",
+                transition: "all 0.2s"
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "var(--navy)";
+                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "rgba(10, 22, 40, 0.65)";
+                e.currentTarget.style.transform = "translateY(-50%)";
+              }}
+            >
+              ❯
+            </button>
+
+            {/* Navigation Dots */}
+            <div style={{ position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 8, zIndex: 10 }}>
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentSlide(idx);
+                  }}
+                  style={{
+                    width: 9,
+                    height: 9,
+                    borderRadius: "50%",
+                    border: "none",
+                    background: idx === currentSlide ? "var(--gold)" : "rgba(255, 255, 255, 0.4)",
+                    cursor: "pointer",
+                    padding: 0,
+                    transition: "all 0.2s"
+                  }}
+                />
+              ))}
+            </div>
           </div>
-          <div style={{ position: "absolute", width: "55%", height: 230, bottom: 0, right: 0, background: "linear-gradient(135deg,var(--gold),var(--gold2))", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", border: "6px solid #fff", boxShadow: "0 20px 60px rgba(10,22,40,.12)" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <div style={{ position: "absolute", bottom: 60, left: 10, background: "var(--navy)", color: "#fff", padding: "14px 18px", borderRadius: 10, boxShadow: "0 10px 30px rgba(0,0,0,.2)", zIndex: 2 }}>
+
+          {/* Badge Overlay */}
+          <div style={{ position: "absolute", bottom: 20, left: -20, background: "var(--navy)", color: "#fff", padding: "14px 18px", borderRadius: 10, boxShadow: "0 10px 30px rgba(0,0,0,.2)", zIndex: 12 }}>
             <span style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 32, fontWeight: 700, color: "var(--gold)", display: "block" }}>6+</span>
             <span style={{ fontSize: 11, color: "rgba(255,255,255,.7)" }}>Years of Experience</span>
           </div>
         </div>
+
         <div>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: "clamp(26px,3vw,36px)", fontWeight: 700, color: "var(--navy)", marginBottom: 18, lineHeight: 1.25 }}>
             Welcome to <span style={{ color: "var(--gold)" }}>PK Financial Services</span>
@@ -82,6 +224,10 @@ export default function About() {
       <style>{`
         @media(max-width:900px){ .about-grid{ grid-template-columns:1fr !important; gap:36px !important; } }
         @media(max-width:600px){ .about-graphic{ height:280px !important; } }
+        .slideshow-container:hover {
+          transform: scale(1.02);
+          box-shadow: 0 30px 60px rgba(10,22,40,0.18) !important;
+        }
       `}</style>
     </section>
   );

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import TopBar from "@/components/TopBar";
+import MarketTicker from "@/components/MarketTicker";
 import Footer from "@/components/Footer";
 
 interface Enquiry {
@@ -147,6 +148,7 @@ export default function AdminPortal() {
 
   return (
     <>
+      <MarketTicker />
       {/* Mini Breadcrumb Header */}
       <div style={{ background: "var(--navy)", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid var(--gold)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>

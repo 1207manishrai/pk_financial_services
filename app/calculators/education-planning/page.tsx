@@ -39,6 +39,7 @@ import {
 
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
+import MarketTicker from "@/components/MarketTicker";
 import Footer from "@/components/Footer";
 
 // Form Validation Schema using Zod
@@ -728,6 +729,7 @@ export default function EducationPlanning() {
 
   return (
     <>
+      <MarketTicker />
       <Header />
       <TopBar />
       

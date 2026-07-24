@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
+import MarketTicker from "@/components/MarketTicker";
 import Footer from "@/components/Footer";
 
 interface KYCResult {
@@ -81,6 +82,7 @@ export default function KYCPage() {
     <>
       {/* Hide navbar elements during standard printing of results */}
       <div className="no-print">
+        <MarketTicker />
         <Header />
         <TopBar />
       </div>
