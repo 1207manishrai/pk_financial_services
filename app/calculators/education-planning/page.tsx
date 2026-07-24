@@ -728,8 +728,8 @@ export default function EducationPlanning() {
 
   return (
     <>
-      <TopBar />
       <Header />
+      <TopBar />
       
       <main className={`min-h-screen transition-colors duration-300 ${darkMode ? "bg-slate-900 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
         

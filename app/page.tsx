@@ -28,8 +28,8 @@ export default function Home() {
 
   return (
     <>
-      <TopBar />
       <Header />
+      <TopBar />
       <Hero onOpenEnquiry={() => handleOpenEnquiry()} />
       <About />
       <Stats />

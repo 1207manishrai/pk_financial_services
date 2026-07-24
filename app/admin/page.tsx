@@ -147,8 +147,6 @@ export default function AdminPortal() {
 
   return (
     <>
-      <TopBar />
-      
       {/* Mini Breadcrumb Header */}
       <div style={{ background: "var(--navy)", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid var(--gold)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -166,6 +164,8 @@ export default function AdminPortal() {
           </button>
         )}
       </div>
+
+      <TopBar />
 
       <main style={{ minHeight: "75vh", background: "var(--cream)", padding: "40px 24px" }}>
         <div style={{ maxWidth: 1140, margin: "0 auto" }}>

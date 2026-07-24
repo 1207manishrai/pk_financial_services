@@ -81,8 +81,8 @@ export default function KYCPage() {
     <>
       {/* Hide navbar elements during standard printing of results */}
       <div className="no-print">
-        <TopBar />
         <Header />
+        <TopBar />
       </div>
 
       {/* Hero Banner (hidden on print) */}
