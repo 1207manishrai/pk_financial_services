@@ -2,9 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { num: 8, suffix: "+", label: "Years of Experience" },
+  { num: 6, suffix: "+", label: "Years of Experience" },
   { num: 1000, suffix: "+", label: "Happy Clients", prefix: "" },
-  { num: 60, suffix: " Cr+", label: "AUM (Assets Under Management)", prefix: "₹" },
   { num: 98, suffix: "%", label: "Client Satisfaction" },
 ];
 
@@ -36,7 +35,7 @@ function Counter({ num, suffix, prefix = "" }: { num: number; suffix: string; pr
 export default function Stats() {
   return (
     <div style={{ background: "var(--gold)", padding: "28px 24px" }}>
-      <div style={{ maxWidth: 1200, margin: "auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, textAlign: "center" }} className="stats-grid">
+      <div style={{ maxWidth: 1200, margin: "auto", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, textAlign: "center" }} className="stats-grid">
         {stats.map((s) => (
           <div key={s.label}>
             <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 36, fontWeight: 700, color: "var(--navy)" }}>

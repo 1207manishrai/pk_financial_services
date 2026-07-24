@@ -16,7 +16,7 @@ export default function About() {
             </svg>
           </div>
           <div style={{ position: "absolute", bottom: 60, left: 10, background: "var(--navy)", color: "#fff", padding: "14px 18px", borderRadius: 10, boxShadow: "0 10px 30px rgba(0,0,0,.2)", zIndex: 2 }}>
-            <span style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 32, fontWeight: 700, color: "var(--gold)", display: "block" }}>8+</span>
+            <span style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 32, fontWeight: 700, color: "var(--gold)", display: "block" }}>6+</span>
             <span style={{ fontSize: 11, color: "rgba(255,255,255,.7)" }}>Years of Experience</span>
           </div>
         </div>

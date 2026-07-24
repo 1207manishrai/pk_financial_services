@@ -85,3 +85,32 @@ export function saveEnquiry(recordData: Omit<EnquiryRecord, "status" | "submitte
 
   return newRecord;
 }
+
+export function updateEnquiryStatus(phone: string, submittedAt: string, newStatus: string): boolean {
+  const list = getAllEnquiries();
+  const index = list.findIndex(e => e.phone === phone && e.submittedAt === submittedAt);
+  if (index === -1) return false;
+  
+  list[index].status = newStatus;
+  memoryEnquiries = list;
+
+  let saved = false;
+  try {
+    ensureStoreExists();
+    fs.writeFileSync(filePath, JSON.stringify(list, null, 2), "utf-8");
+    saved = true;
+  } catch (err) {
+    console.warn("[ENQUIRY STORE] Failed writing updated enquiries.json:", err);
+  }
+
+  if (!saved) {
+    try {
+      fs.writeFileSync(tmpFilePath, JSON.stringify(list, null, 2), "utf-8");
+      saved = true;
+    } catch (err) {
+      console.warn("[ENQUIRY STORE] Failed writing updated to /tmp fallback:", err);
+    }
+  }
+
+  return saved;
+}

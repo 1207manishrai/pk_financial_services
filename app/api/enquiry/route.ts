@@ -1,5 +1,18 @@
 import { NextResponse } from "next/server";
-import { saveEnquiry } from "@/lib/enquiriesStore";
+import { saveEnquiry, getAllEnquiries, updateEnquiryStatus } from "@/lib/enquiriesStore";
+
+export async function GET() {
+  try {
+    const list = getAllEnquiries();
+    return NextResponse.json({ success: true, enquiries: list });
+  } catch (error: any) {
+    console.error("Failed to retrieve enquiries:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to retrieve enquiries from database." },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -63,6 +76,49 @@ export async function POST(request: Request) {
     console.error("Enquiry submission error:", error);
     return NextResponse.json(
       { success: false, error: error?.message || "Something went wrong while processing your enquiry. Please try again." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    let body: any;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { success: false, error: "Invalid request payload." },
+        { status: 400 }
+      );
+    }
+
+    const { phone, submittedAt, status } = body || {};
+
+    if (!phone || !submittedAt || !status) {
+      return NextResponse.json(
+        { success: false, error: "Missing required enquiry update fields." },
+        { status: 400 }
+      );
+    }
+
+    const success = updateEnquiryStatus(phone, submittedAt, status);
+
+    if (success) {
+      return NextResponse.json({
+        success: true,
+        message: `Enquiry status successfully updated to '${status}'.`
+      });
+    } else {
+      return NextResponse.json(
+        { success: false, error: "Enquiry record not found." },
+        { status: 404 }
+      );
+    }
+  } catch (error: any) {
+    console.error("Enquiry status update error:", error);
+    return NextResponse.json(
+      { success: false, error: "Internal server error while updating enquiry status." },
       { status: 500 }
     );
   }

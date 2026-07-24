@@ -18,6 +18,10 @@ export default function Home() {
   const [selectedService, setSelectedService] = useState("");
 
   const handleOpenEnquiry = (service: string = "") => {
+    if (service === "Education Planning") {
+      window.location.href = "/calculators/education-planning";
+      return;
+    }
     setSelectedService(service);
     setModalOpen(true);
   };

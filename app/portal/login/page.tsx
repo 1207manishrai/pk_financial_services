@@ -58,7 +58,18 @@ export default function LoginPage() {
           <Link href="/" style={{ textDecoration: "none" }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
               <div style={{ width: 50, height: 50, background: "rgba(255,255,255,.1)", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(255,255,255,.2)" }}>
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 22L10 14L14 18L18 10L24 22H4Z" fill="#c9a84c" /><circle cx="20" cy="7" r="3" fill="#e8c975" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 32, height: 32 }} fill="url(#goldGradient)">
+                  <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="var(--gold)" />
+                      <stop offset="100%" stopColor="#d97706" />
+                    </linearGradient>
+                  </defs>
+                  {/* Head */}
+                  <ellipse cx="50" cy="32" rx="16" ry="21" />
+                  {/* Shoulders */}
+                  <path d="M16,90 C16,76 26,65 50,65 C74,65 84,76 84,90 L84,92 C84,94.2 82.2,96 80,96 L20,96 C17.8,96 16,94.2 16,92 Z" />
+                </svg>
               </div>
               <div style={{ textAlign: "left" }}>
                 <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: "#fff" }}>PK Financial Services</div>

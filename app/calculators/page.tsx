@@ -8,16 +8,43 @@ function fmt(n: number): string {
   return "₹" + Math.round(n).toLocaleString("en-IN");
 }
 
-function RangeField({ label, id, min, max, step, value, onChange, displayVal, minLabel, maxLabel }: {
+function RangeField({ label, id, min, max, step, value, onChange, minLabel, maxLabel, unit = "" }: {
   label: string; id: string; min: number; max: number; step: number; value: number;
-  onChange: (v: number) => void; displayVal: string; minLabel: string; maxLabel: string;
+  onChange: (v: number) => void; minLabel: string; maxLabel: string; unit?: string;
 }) {
   const pct = ((value - min) / (max - min)) * 100;
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13, fontWeight: 600, color: "var(--navy)", marginBottom: 8, textTransform: "uppercase", letterSpacing: ".5px" }}>
         <label htmlFor={id}>{label}</label>
-        <span style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 16, color: "var(--gold)", textTransform: "none", letterSpacing: 0 }}>{displayVal}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          {unit === "₹" && <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 14 }}>₹</span>}
+          <input
+            type="number"
+            value={value || ""}
+            min={min}
+            max={max}
+            step={step}
+            onChange={(e) => {
+              const val = e.target.value === "" ? 0 : Number(e.target.value);
+              onChange(val);
+            }}
+            style={{
+              width: "120px",
+              padding: "4px 10px",
+              border: "1.5px solid var(--gold)",
+              borderRadius: 8,
+              fontSize: 14.5,
+              fontWeight: 700,
+              color: "var(--navy)",
+              background: "#fff",
+              outline: "none",
+              textAlign: "right",
+              fontFamily: "inherit"
+            }}
+          />
+          {unit && unit !== "₹" && <span style={{ color: "var(--gold)", fontWeight: 700, fontSize: 12.5 }}>{unit}</span>}
+        </div>
       </div>
       <input id={id} type="range" min={min} max={max} step={step} value={value}
         onChange={e => onChange(+e.target.value)}
@@ -74,9 +101,9 @@ function SIPCalc() {
         <div style={{ padding: 36, borderRight: "1px solid #eee" }}>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 22, color: "var(--navy)", marginBottom: 6 }}>SIP Calculator</h2>
           <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Estimate returns on your monthly SIP investments</p>
-          <RangeField label="Monthly Investment" id="sip-amt" min={500} max={100000} step={500} value={amt} onChange={setAmt} displayVal={fmt(amt)} minLabel="₹500" maxLabel="₹1,00,000" />
-          <RangeField label="Expected Annual Return" id="sip-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} displayVal={rate.toFixed(1) + "%"} minLabel="1%" maxLabel="30%" />
-          <RangeField label="Investment Period" id="sip-years" min={1} max={40} step={1} value={years} onChange={setYears} displayVal={years + " Yrs"} minLabel="1 Yr" maxLabel="40 Yrs" />
+          <RangeField label="Monthly Investment" id="sip-amt" min={500} max={100000} step={500} value={amt} onChange={setAmt} minLabel="₹500" maxLabel="₹1,00,000" unit="₹" />
+          <RangeField label="Expected Annual Return" id="sip-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} minLabel="1%" maxLabel="30%" unit="%" />
+          <RangeField label="Investment Period" id="sip-years" min={1} max={40} step={1} value={years} onChange={setYears} minLabel="1 Yr" maxLabel="40 Yrs" unit="Yrs" />
         </div>
         <div style={{ padding: 36, background: "linear-gradient(160deg,var(--navy) 0%,#1a3560 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, color: "rgba(255,255,255,.5)", marginBottom: 6 }}>Total Value at Maturity</div>
@@ -108,16 +135,16 @@ function LumpsumCalc() {
         <div style={{ padding: 36, borderRight: "1px solid #eee" }}>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 22, color: "var(--navy)", marginBottom: 6 }}>Lumpsum Calculator</h2>
           <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Calculate the future value of a one-time investment</p>
-          <RangeField label="One-Time Investment" id="ls-amt" min={1000} max={10000000} step={1000} value={amt} onChange={setAmt} displayVal={fmt(amt)} minLabel="₹1,000" maxLabel="₹1 Cr" />
-          <RangeField label="Expected Annual Return" id="ls-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} displayVal={rate.toFixed(1) + "%"} minLabel="1%" maxLabel="30%" />
-          <RangeField label="Investment Period" id="ls-years" min={1} max={40} step={1} value={years} onChange={setYears} displayVal={years + " Yrs"} minLabel="1 Yr" maxLabel="40 Yrs" />
+          <RangeField label="Total Investment" id="lump-amt" min={5000} max={10000000} step={5000} value={amt} onChange={setAmt} minLabel="₹5,000" maxLabel="₹1 Cr" unit="₹" />
+          <RangeField label="Expected Annual Return" id="lump-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} minLabel="1%" maxLabel="30%" unit="%" />
+          <RangeField label="Investment Period" id="lump-years" min={1} max={40} step={1} value={years} onChange={setYears} minLabel="1 Yr" maxLabel="40 Yrs" unit="Yrs" />
         </div>
         <div style={{ padding: 36, background: "linear-gradient(160deg,var(--navy) 0%,#1a3560 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, color: "rgba(255,255,255,.5)", marginBottom: 6 }}>Total Value at Maturity</div>
           <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 36, fontWeight: 700, color: "var(--gold)", marginBottom: 16 }}>{fmt(total)}</div>
-          <Donut pct={Math.min(gainPct / 5, 100)} label="Gain" />
+          <Donut pct={Math.min(gainPct / 3, 100)} label="Gain" />
           <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
-            <ResultPill label="Amount Invested" val={fmt(amt)} />
+            <ResultPill label="Initial Investment" val={fmt(amt)} />
             <ResultPill label="Est. Returns" val={fmt(returns)} valStyle={{ color: "var(--gold2)" }} />
           </div>
         </div>
@@ -144,9 +171,9 @@ function LoanCalc() {
         <div style={{ padding: 36, borderRight: "1px solid #eee" }}>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 22, color: "var(--navy)", marginBottom: 6 }}>Loan / EMI Calculator</h2>
           <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Calculate your monthly EMI for any loan</p>
-          <RangeField label="Loan Amount" id="loan-amt" min={10000} max={10000000} step={10000} value={principal} onChange={setPrincipal} displayVal={fmt(principal)} minLabel="₹10,000" maxLabel="₹1 Cr" />
-          <RangeField label="Annual Interest Rate" id="loan-rate" min={1} max={24} step={0.1} value={rate} onChange={setRate} displayVal={rate.toFixed(1) + "%"} minLabel="1%" maxLabel="24%" />
-          <RangeField label="Loan Tenure" id="loan-years" min={1} max={30} step={1} value={years} onChange={setYears} displayVal={years + " Yrs"} minLabel="1 Yr" maxLabel="30 Yrs" />
+          <RangeField label="Loan Amount" id="loan-amt" min={10000} max={10000000} step={10000} value={principal} onChange={setPrincipal} minLabel="₹10,000" maxLabel="₹1 Cr" unit="₹" />
+          <RangeField label="Annual Interest Rate" id="loan-rate" min={1} max={24} step={0.1} value={rate} onChange={setRate} minLabel="1%" maxLabel="24%" unit="%" />
+          <RangeField label="Loan Tenure" id="loan-years" min={1} max={30} step={1} value={years} onChange={setYears} minLabel="1 Yr" maxLabel="30 Yrs" unit="Yrs" />
         </div>
         <div style={{ padding: 36, background: "linear-gradient(160deg,var(--navy) 0%,#1a3560 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, color: "rgba(255,255,255,.5)", marginBottom: 6 }}>Monthly EMI</div>
@@ -189,7 +216,7 @@ export default function CalculatorsPage() {
       <header style={{ background: "#fff", boxShadow: "0 2px 20px rgba(0,0,0,.08)" }}>
         <div style={{ maxWidth: 1200, margin: "auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none", padding: "14px 0" }}>
-            <img src="/logo.svg" alt="PK Financial Services Logo" style={{ height: 135, maxWidth: 380, width: "auto", objectFit: "contain" }} />
+            <img src="/logo.jpg" alt="PK Financial Services Logo" style={{ height: 160, maxWidth: 440, width: "auto", objectFit: "contain" }} />
           </Link>
           <Link href="/" style={{ background: "var(--navy)", color: "#fff", padding: "9px 20px", borderRadius: 5, textDecoration: "none", fontSize: 13, fontWeight: 600 }}>← Back to Home</Link>
         </div>
@@ -197,6 +224,30 @@ export default function CalculatorsPage() {
 
       {/* Page Hero */}
       <div style={{ background: "linear-gradient(135deg,var(--navy),#1a3560)", padding: "50px 24px", textAlign: "center" }}>
+        <div style={{ display: "inline-flex", marginBottom: 16 }} className="interactive-calc-logo-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="interactive-calc-logo" style={{ width: 64, height: 64, cursor: "pointer", transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}>
+            {/* Body */}
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2" fill="rgba(201,168,76,0.06)" />
+            {/* Screen */}
+            <rect x="7" y="5" width="10" height="4" rx="1" fill="var(--navy)" stroke="var(--gold)" strokeWidth="1" />
+            {/* Screen characters (simulated digits) */}
+            <line x1="9" y1="7" x2="11" y2="7" stroke="var(--gold)" strokeWidth="1" />
+            <line x1="13" y1="7" x2="15" y2="7" stroke="var(--gold)" strokeWidth="1" />
+            {/* Keypad */}
+            <circle cx="8" cy="12" r="1" fill="var(--gold)" />
+            <circle cx="12" cy="12" r="1" fill="var(--gold)" />
+            <circle cx="16" cy="12" r="1" fill="var(--gold)" />
+            
+            <circle cx="8" cy="15" r="1" fill="var(--gold)" />
+            <circle cx="12" cy="15" r="1" fill="var(--gold)" />
+            <circle cx="16" cy="15" r="1" fill="var(--gold)" />
+            
+            <circle cx="8" cy="18" r="1" fill="var(--gold)" />
+            <circle cx="12" cy="18" r="1" fill="var(--gold)" />
+            {/* Plus Key */}
+            <rect x="15" y="17" width="2" height="3" rx="0.5" fill="var(--gold)" />
+          </svg>
+        </div>
         <h1 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: "clamp(28px,4vw,42px)", color: "#fff", marginBottom: 10 }}>
           Financial <span style={{ color: "var(--gold)" }}>Calculators</span>
         </h1>
@@ -229,6 +280,10 @@ export default function CalculatorsPage() {
       </div>
 
       <style>{`
+        .interactive-calc-logo:hover {
+          transform: translateY(-4px) rotate(-8deg) scale(1.1);
+          filter: drop-shadow(0 6px 16px rgba(201, 168, 76, 0.45));
+        }
         @media(max-width:700px){
           .calc-grid { grid-template-columns:1fr !important; }
           .calc-grid > div { padding: 24px 20px !important; border-right: none !important; border-bottom: 1px solid #eee !important; }

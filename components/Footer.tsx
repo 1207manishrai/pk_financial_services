@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       {/* CTA Banner */}
       <div style={{ background: "var(--gold)", padding: "40px 24px", textAlign: "center" }}>
-        <h3 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: "clamp(20px,2.5vw,28px)", color: "var(--navy)", marginBottom: 16 }}>Over 8 Years of Experience — We Ensure You Always Get the Best.</h3>
+        <h3 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: "clamp(20px,2.5vw,28px)", color: "var(--navy)", marginBottom: 16 }}>Over 6 Years of Experience — We Ensure You Always Get the Best.</h3>
         <a href="#contact" style={{ background: "var(--navy)", color: "#fff", padding: "13px 28px", borderRadius: 5, fontSize: 14, fontWeight: 700, textDecoration: "none", display: "inline-block" }}>Get a Free Quote →</a>
       </div>
       {/* Main Footer */}
@@ -14,7 +14,9 @@ export default function Footer() {
         <div style={{ maxWidth: 1200, margin: "auto", display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1.2fr", gap: 40, paddingBottom: 40 }} className="footer-grid">
           <div>
             <Link href="/" style={{ display: "inline-block", textDecoration: "none", marginBottom: 16 }}>
-              <img src="/logo-white.svg" alt="PK Financial Services Logo" style={{ height: 175, maxWidth: 420, width: "auto", objectFit: "contain" }} />
+              <div style={{ background: "#fff", padding: "12px", borderRadius: "12px", display: "inline-block", boxShadow: "0 4px 20px rgba(0,0,0,0.2)" }}>
+                <img src="/logo.jpg" alt="PK Financial Services Logo" style={{ height: 135, maxWidth: 320, width: "auto", objectFit: "contain", display: "block" }} />
+              </div>
             </Link>
             <p style={{ fontSize: 13.5, lineHeight: 1.8 }}>We are committed to helping every Indian household achieve financial freedom through disciplined investing, smart tax planning, and the right insurance coverage.</p>
             <div style={{ marginTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 12 }}>
@@ -34,8 +36,17 @@ export default function Footer() {
           <div>
             <h4 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 18, paddingBottom: 12, borderBottom: "2px solid var(--gold)", display: "inline-block" }}>Quick Links</h4>
             <ul style={{ listStyle: "none" }}>
-              {[["Home","/"],["About Us","/#about"],["Calculators","/calculators"],["Financial Planning","/#"],["Downloads","/#"],["FAQ","/#"],["Contact Us","/#contact"]].map(([l,h]) => (
-                <li key={l} style={{ marginBottom: 9 }}><Link href={h} style={{ color: "rgba(255,255,255,.62)", textDecoration: "none", fontSize: 13.5 }}>› {l}</Link></li>
+              {[["Home","/"],["About Us","/#about"],["Calculators","/calculators"],["Check KYC Status","/kyc"],["Financial Planning","/#"],["Downloads","/#"],["FAQ","/#"],["Contact Us","/#contact"]].map(([l,h]) => (
+                <li key={l} style={{ marginBottom: 9 }}>
+                  <Link 
+                    href={h} 
+                    target={h.startsWith("http") ? "_blank" : undefined}
+                    rel={h.startsWith("http") ? "noopener noreferrer" : undefined}
+                    style={{ color: "rgba(255,255,255,.62)", textDecoration: "none", fontSize: 13.5 }}
+                  >
+                    › {l}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>

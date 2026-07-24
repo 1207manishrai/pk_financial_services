@@ -45,11 +45,11 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
           <img
-            src="/logo.svg"
+            src="/logo.jpg?v=3"
             alt="PK Financial Services Logo"
             style={{
-              height: scrolled ? 75 : 95,
-              maxWidth: 240,
+              height: scrolled ? 90 : 120,
+              maxWidth: 280,
               width: "auto",
               objectFit: "contain",
               transition: "height 0.3s ease"
@@ -85,8 +85,40 @@ export default function Header() {
           ))}
         </ul>
 
-        {/* Action Button */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }} className="actions-desktop">
+        {/* Action Buttons */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }} className="actions-desktop">
+          <Link
+            href="/admin"
+            style={{
+              border: "1.5px solid var(--navy)",
+              color: "var(--navy)",
+              padding: "8px 18px",
+              borderRadius: 6,
+              textDecoration: "none",
+              fontSize: 13.5,
+              fontWeight: 700,
+              transition: "all 0.2s",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--navy)";
+              e.currentTarget.style.color = "#ffffff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "var(--navy)";
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 14, height: 14 }} fill="currentColor">
+              <ellipse cx="50" cy="32" rx="16" ry="21" />
+              <path d="M14,90 C14,80 18,70 32,63 C40,58 42,58 45,71 L48,80 L52,80 L55,71 C58,58 60,58 68,63 C82,70 86,80 86,90 L86,92 C86,94.2 84.2,96 82,96 L18,96 C15.8,96 14,94.2 14,92 Z" />
+              <polygon points="48,72 52,72 51,77 49,77" />
+              <polygon points="49.2,78 50.8,78 52,90 50,93 48,90" />
+            </svg>
+            Admin Portal
+          </Link>
           <Link
             href="/portal"
             style={{
@@ -98,7 +130,10 @@ export default function Header() {
               fontSize: 13.5,
               fontWeight: 700,
               boxShadow: "0 4px 12px rgba(201,168,76,.2)",
-              transition: "transform 0.2s, box-shadow 0.2s"
+              transition: "transform 0.2s, box-shadow 0.2s",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-1px)";
@@ -109,7 +144,11 @@ export default function Header() {
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(201,168,76,.2)";
             }}
           >
-            💼 Client Portal
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 14, height: 14 }} fill="currentColor">
+              <ellipse cx="50" cy="32" rx="16" ry="21" />
+              <path d="M16,90 C16,76 26,65 50,65 C74,65 84,76 84,90 L84,92 C84,94.2 82.2,96 80,96 L20,96 C17.8,96 16,94.2 16,92 Z" />
+            </svg>
+            Client Portal
           </Link>
         </div>
 
@@ -202,7 +241,33 @@ export default function Header() {
         </ul>
 
         {/* Mobile Actions */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: "auto" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: "auto" }}>
+          <Link
+            href="/admin"
+            onClick={() => setIsOpen(false)}
+            style={{
+              border: "1.5px solid var(--navy)",
+              color: "var(--navy)",
+              textAlign: "center",
+              padding: "11px",
+              borderRadius: 8,
+              textDecoration: "none",
+              fontSize: 14,
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 15, height: 15 }} fill="currentColor">
+              <ellipse cx="50" cy="32" rx="16" ry="21" />
+              <path d="M14,90 C14,80 18,70 32,63 C40,58 42,58 45,71 L48,80 L52,80 L55,71 C58,58 60,58 68,63 C82,70 86,80 86,90 L86,92 C86,94.2 84.2,96 82,96 L18,96 C15.8,96 14,94.2 14,92 Z" />
+              <polygon points="48,72 52,72 51,77 49,77" />
+              <polygon points="49.2,78 50.8,78 52,90 50,93 48,90" />
+            </svg>
+            Admin Portal
+          </Link>
           <Link
             href="/portal"
             onClick={() => setIsOpen(false)}
@@ -214,10 +279,18 @@ export default function Header() {
               borderRadius: 8,
               textDecoration: "none",
               fontSize: 14,
-              fontWeight: 700
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8
             }}
           >
-            💼 Client Portal
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style={{ width: 15, height: 15 }} fill="currentColor">
+              <ellipse cx="50" cy="32" rx="16" ry="21" />
+              <path d="M16,90 C16,76 26,65 50,65 C74,65 84,76 84,90 L84,92 C84,94.2 82.2,96 80,96 L20,96 C17.8,96 16,94.2 16,92 Z" />
+            </svg>
+            Client Portal
           </Link>
           
           {/* Mobile Contacts */}
