@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "PK Financial Services | Your Trusted Financial Partner",
@@ -18,6 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        <meta
+          name="p:domain_verify" content="257c2b6ba779e3d5b75077a92f2ff039" />
         <link rel="icon" type="image/jpeg" href="/logo.jpg?v=4" />
         <link rel="shortcut icon" href="/logo.jpg?v=4" />
         <link rel="apple-touch-icon" href="/logo.jpg?v=4" />
@@ -27,7 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body style={{ fontFamily: "'DM Sans', sans-serif" }}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
 }
+
