@@ -14,6 +14,8 @@ import News from "@/components/News";
 import Footer from "@/components/Footer";
 import EnquiryModal from "@/components/EnquiryModal";
 
+import MfVsFdComparison from "@/components/MfVsFdComparison";
+
 export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
@@ -37,6 +39,9 @@ export default function Home() {
       <Stats />
       <Services onEnquire={(service) => handleOpenEnquiry(service)} />
       <CalcStrip />
+
+      {/* Mutual Funds vs FD / RD Returns Comparison */}
+      <MfVsFdComparison onOpenEnquiry={(service) => handleOpenEnquiry(service)} />
 
       {/* Quote Banner */}
       <div style={{ background: "linear-gradient(135deg,var(--navy) 0%,#1a3560 100%)", padding: "60px 24px", textAlign: "center" }}>

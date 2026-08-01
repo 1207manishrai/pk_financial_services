@@ -16,6 +16,7 @@ export default function CalcStrip() {
           {[
             { icon: "📈", label: "SIP Calculator", sub: "Monthly SIP returns", hash: "" },
             { icon: "💰", label: "Lumpsum Calculator", sub: "One-time investment", hash: "#lumpsum" },
+            { icon: "⚖️", label: "MF vs FD / RD", sub: "Compare wealth growth", hash: "#mf-vs-fd" },
             { icon: "🏦", label: "Loan / EMI", sub: "Monthly EMI & interest", hash: "#loan" },
           ].map((c) => (
             <Link key={c.label} href={`/calculators${c.hash}`}

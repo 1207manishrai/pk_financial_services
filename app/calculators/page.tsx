@@ -193,17 +193,20 @@ function LoanCalc() {
   );
 }
 
+import MfVsFdComparison from "@/components/MfVsFdComparison";
+
 const TABS = [
   { id: "sip", icon: "📈", label: "SIP Calculator" },
   { id: "lumpsum", icon: "💰", label: "Lumpsum Calculator" },
   { id: "loan", icon: "🏦", label: "Loan / EMI" },
+  { id: "mf-vs-fd", icon: "⚖️", label: "MF vs FD/RD" },
 ];
 
 export default function CalculatorsPage() {
   const [active, setActive] = useState("sip");
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
-    if (hash === "lumpsum" || hash === "loan") setActive(hash);
+    if (hash === "lumpsum" || hash === "loan" || hash === "mf-vs-fd") setActive(hash);
   }, []);
 
   return (
@@ -255,7 +258,7 @@ export default function CalculatorsPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ maxWidth: 900, margin: "-24px auto 0", padding: "0 24px", position: "relative", zIndex: 10 }}>
+      <div style={{ maxWidth: 1050, margin: "-24px auto 0", padding: "0 24px", position: "relative", zIndex: 10 }}>
         <div style={{ display: "flex", background: "#fff", borderRadius: 12, boxShadow: "0 8px 30px rgba(0,0,0,.12)", overflow: "auto" }} className="calc-tabs">
           {TABS.map(tab => (
             <button key={tab.id} onClick={() => setActive(tab.id)}
@@ -268,10 +271,11 @@ export default function CalculatorsPage() {
       </div>
 
       {/* Calculator */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "30px 24px 60px" }}>
+      <div style={{ maxWidth: active === "mf-vs-fd" ? 1150 : 900, margin: "0 auto", padding: "30px 24px 60px" }}>
         {active === "sip" && <SIPCalc />}
         {active === "lumpsum" && <LumpsumCalc />}
         {active === "loan" && <LoanCalc />}
+        {active === "mf-vs-fd" && <MfVsFdComparison standalonePage />}
       </div>
 
       {/* Footer */}
