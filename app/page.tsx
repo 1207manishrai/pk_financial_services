@@ -8,6 +8,7 @@ import Stats from "@/components/Stats";
 import CalcStrip from "@/components/CalcStrip";
 import About from "@/components/About";
 import Services from "@/components/Services";
+import AmcPartners from "@/components/AmcPartners";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import News from "@/components/News";
@@ -37,6 +38,7 @@ export default function Home() {
       <Hero onOpenEnquiry={() => handleOpenEnquiry()} />
       <About />
       <Stats />
+      <AmcPartners />
       <Services onEnquire={(service) => handleOpenEnquiry(service)} />
       <CalcStrip />
 
