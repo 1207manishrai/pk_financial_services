@@ -1,167 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 
 export default function About() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = ["/about-graphic.png", "/about-graphic-2.png", "/about-graphic-3.png"];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4500);
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
   return (
     <section id="about" style={{ background: "var(--cream)", padding: "80px 24px" }}>
-      <div style={{ maxWidth: 1200, margin: "auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="about-grid">
-        {/* Slideshow 3D graphic block */}
-        <div style={{ position: "relative", height: 420, display: "flex", alignItems: "center", justifyContent: "center" }} className="about-graphic">
-          <div 
-            style={{ 
-              position: "relative", 
-              width: "100%", 
-              height: "100%", 
-              overflow: "hidden", 
-              borderRadius: 16, 
-              boxShadow: "0 20px 40px rgba(10,22,40,0.12)",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease"
-            }}
-            className="slideshow-container"
-          >
-            {slides.map((slide, index) => (
-              <img
-                key={slide}
-                src={slide}
-                alt={`Financial Growth 3D Graphic ${index + 1}`}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                  borderRadius: 16,
-                  transition: "opacity 0.8s ease",
-                  opacity: index === currentSlide ? 1 : 0,
-                  zIndex: index === currentSlide ? 1 : 0,
-                  pointerEvents: index === currentSlide ? "auto" : "none"
-                }}
-              />
-            ))}
-
-            {/* Left navigation arrow */}
-            <button
-              onClick={handlePrev}
-              style={{
-                position: "absolute",
-                left: 16,
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "rgba(10, 22, 40, 0.65)",
-                border: "none",
-                color: "#fff",
-                width: 36,
-                height: 36,
-                borderRadius: "50%",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                fontSize: 15,
-                fontWeight: "bold",
-                transition: "all 0.2s"
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "var(--navy)";
-                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "rgba(10, 22, 40, 0.65)";
-                e.currentTarget.style.transform = "translateY(-50%)";
-              }}
-            >
-              ❮
-            </button>
-
-            {/* Right navigation arrow */}
-            <button
-              onClick={handleNext}
-              style={{
-                position: "absolute",
-                right: 16,
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "rgba(10, 22, 40, 0.65)",
-                border: "none",
-                color: "#fff",
-                width: 36,
-                height: 36,
-                borderRadius: "50%",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                fontSize: 15,
-                fontWeight: "bold",
-                transition: "all 0.2s"
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "var(--navy)";
-                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "rgba(10, 22, 40, 0.65)";
-                e.currentTarget.style.transform = "translateY(-50%)";
-              }}
-            >
-              ❯
-            </button>
-
-            {/* Navigation Dots */}
-            <div style={{ position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 8, zIndex: 10 }}>
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentSlide(idx);
-                  }}
-                  style={{
-                    width: 9,
-                    height: 9,
-                    borderRadius: "50%",
-                    border: "none",
-                    background: idx === currentSlide ? "var(--gold)" : "rgba(255, 255, 255, 0.4)",
-                    cursor: "pointer",
-                    padding: 0,
-                    transition: "all 0.2s"
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Badge Overlay */}
-          <div style={{ position: "absolute", bottom: 20, left: -20, background: "var(--navy)", color: "#fff", padding: "14px 18px", borderRadius: 10, boxShadow: "0 10px 30px rgba(0,0,0,.2)", zIndex: 12 }}>
-            <span style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 32, fontWeight: 700, color: "var(--gold)", display: "block" }}>6+</span>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,.7)" }}>Years of Experience</span>
-          </div>
-        </div>
-
+      <div style={{ maxWidth: 1100, margin: "auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "start" }} className="about-grid">
         <div>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: "clamp(26px,3vw,36px)", fontWeight: 700, color: "var(--navy)", marginBottom: 18, lineHeight: 1.25 }}>
             Welcome to <span style={{ color: "var(--gold)" }}>PK Financial Services</span>
@@ -218,16 +61,137 @@ export default function About() {
               </div>
             </div>
           </div>
-          <a href="#contact" style={{ background: "var(--gold)", color: "var(--navy)", padding: "13px 28px", borderRadius: 5, fontSize: 14, fontWeight: 700, textDecoration: "none", display: "inline-block" }}>Know More →</a>
+
+          <a href="#contact" style={{ background: "var(--gold)", color: "var(--navy)", padding: "13px 28px", borderRadius: 5, fontSize: 14, fontWeight: 700, textDecoration: "none", display: "inline-block", marginBottom: "32px" }}>Know More →</a>
+        </div>
+        <div>
+          {/* Investment Operations Associates */}
+          <div style={{ marginBottom: "28px" }}>
+            <h3 style={{ fontSize: "15px", fontWeight: 700, color: "var(--navy)", marginBottom: "12px", borderBottom: "1px solid rgba(201,168,76,0.2)", paddingBottom: "8px" }}>
+              Investment Operations Associates
+            </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {/* Associate 1 */}
+              <div style={{
+                background: "linear-gradient(135deg, rgba(10, 22, 40, 0.01) 0%, rgba(201, 168, 76, 0.02) 100%)",
+                borderLeft: "3px solid var(--gold)",
+                borderTop: "1px solid rgba(201,168,76,0.1)",
+                borderRight: "1px solid rgba(201,168,76,0.1)",
+                borderBottom: "1px solid rgba(201,168,76,0.1)",
+                borderRadius: "6px",
+                padding: "12px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "12px"
+              }}>
+                <div style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: "var(--navy)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  color: "var(--gold)",
+                  flexShrink: 0
+                }}>
+                  AK
+                </div>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                    <span style={{ fontSize: "14px", fontWeight: 700, color: "var(--navy)" }}>Abhishek Kunwar</span>
+                  </div>
+                  <p style={{ fontSize: "12px", color: "var(--gray)", margin: "2px 0" }}>EX-JE at Northern Railway</p>
+                  <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--gold)" }}>
+                    ARN-366509
+                  </div>
+                </div>
+              </div>
+
+              {/* Associate 2 */}
+              <div style={{
+                background: "linear-gradient(135deg, rgba(10, 22, 40, 0.01) 0%, rgba(201, 168, 76, 0.02) 100%)",
+                borderLeft: "3px solid var(--gold)",
+                borderTop: "1px solid rgba(201,168,76,0.1)",
+                borderRight: "1px solid rgba(201,168,76,0.1)",
+                borderBottom: "1px solid rgba(201,168,76,0.1)",
+                borderRadius: "6px",
+                padding: "12px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "12px"
+              }}>
+                <div style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: "var(--navy)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  color: "var(--gold)",
+                  flexShrink: 0
+                }}>
+                  MR
+                </div>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                    <span style={{ fontSize: "14px", fontWeight: 700, color: "var(--navy)" }}>Manish Rai</span>
+                  </div>
+                  <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--gold)", marginTop: "2px" }}>
+                    ARN-181978
+                  </div>
+                </div>
+              </div>
+
+              {/* Associate 3 */}
+              <div style={{
+                background: "linear-gradient(135deg, rgba(10, 22, 40, 0.01) 0%, rgba(201, 168, 76, 0.02) 100%)",
+                borderLeft: "3px solid var(--gold)",
+                borderTop: "1px solid rgba(201,168,76,0.1)",
+                borderRight: "1px solid rgba(201,168,76,0.1)",
+                borderBottom: "1px solid rgba(201,168,76,0.1)",
+                borderRadius: "6px",
+                padding: "12px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "12px"
+              }}>
+                <div style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: "var(--navy)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  color: "var(--gold)",
+                  flexShrink: 0
+                }}>
+                  AK
+                </div>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                    <span style={{ fontSize: "14px", fontWeight: 700, color: "var(--navy)" }}>Ayush Kumar</span>
+                  </div>
+                  <div style={{ fontSize: "11px", fontWeight: 600, color: "var(--gold)", marginTop: "2px" }}>
+                    ARN-123456
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
       <style>{`
         @media(max-width:900px){ .about-grid{ grid-template-columns:1fr !important; gap:36px !important; } }
-        @media(max-width:600px){ .about-graphic{ height:280px !important; } }
-        .slideshow-container:hover {
-          transform: scale(1.02);
-          box-shadow: 0 30px 60px rgba(10,22,40,0.18) !important;
-        }
       `}</style>
     </section>
   );

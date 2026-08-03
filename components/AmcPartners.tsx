@@ -319,20 +319,21 @@ export default function AmcPartners() {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: 10,
+            gap: 16,
             background: "rgba(10,22,40,0.05)",
-            borderRadius: 30,
-            padding: "6px 18px",
-            marginBottom: 14,
+            borderRadius: 40,
+            padding: "10px 24px",
+            marginBottom: 20,
           }}
         >
-          <span style={{ fontSize: 15 }}>🤝</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/amfi-logo.svg" alt="AMFI Logo" style={{ height: 42, width: "auto" }} />
           <span
             style={{
-              fontSize: 12.5,
-              fontWeight: 700,
+              fontSize: 16,
+              fontWeight: 800,
               color: "var(--navy)",
-              letterSpacing: 1.2,
+              letterSpacing: 1.5,
               textTransform: "uppercase",
             }}
           >
