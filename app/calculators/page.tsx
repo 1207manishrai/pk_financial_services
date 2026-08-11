@@ -3,8 +3,14 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 function fmt(n: number): string {
+  if (isNaN(n) || !isFinite(n)) return "₹0";
+  return "₹" + Math.round(n).toLocaleString("en-IN");
+}
+
+function fmtShort(n: number): string {
+  if (isNaN(n) || !isFinite(n)) return "₹0";
   if (n >= 10000000) return "₹" + (n / 10000000).toFixed(2) + " Cr";
-  if (n >= 100000) return "₹" + (n / 100000).toFixed(2) + " L";
+  if (n >= 100000) return "₹" + (n / 100000).toFixed(2) + " Lakh";
   return "₹" + Math.round(n).toLocaleString("en-IN");
 }
 
@@ -12,7 +18,7 @@ function RangeField({ label, id, min, max, step, value, onChange, minLabel, maxL
   label: string; id: string; min: number; max: number; step: number; value: number;
   onChange: (v: number) => void; minLabel: string; maxLabel: string; unit?: string;
 }) {
-  const pct = ((value - min) / (max - min)) * 100;
+  const pct = Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100);
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 13, fontWeight: 600, color: "var(--navy)", marginBottom: 8, textTransform: "uppercase", letterSpacing: ".5px" }}>
@@ -90,33 +96,59 @@ function SIPCalc() {
   const [amt, setAmt] = useState(5000);
   const [rate, setRate] = useState(12);
   const [years, setYears] = useState(10);
-  const r = rate / 100 / 12, n = years * 12;
-  const total = amt * (((Math.pow(1 + r, n) - 1) / r) * (1 + r));
-  const invested = amt * n;
-  const returns = total - invested;
-  const gainPct = (returns / invested) * 100;
+
+  const safeAmt = Math.max(0, amt);
+  const safeYears = Math.max(1, years);
+  const safeRate = Math.max(0, rate);
+
+  // Standard SIP Annuity-Due Formula: M = P × {[(1+r)^n – 1] / r} × (1+r)
+  const r = safeRate / 100 / 12; // monthly rate
+  const n = safeYears * 12;      // total months
+
+  const total = r === 0 ? safeAmt * n : safeAmt * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+  const invested = safeAmt * n;
+  const returns = Math.max(0, total - invested);
+
+  // Absolute Return % (Gain over invested principal)
+  const absReturnPct = invested > 0 ? (returns / invested) * 100 : 0;
+  // Expected Annualised Return (XIRR/IRR) is the input rate
+  const xirrPct = safeRate;
+  // Donut = returns as % of total corpus
+  const donutPct = total > 0 ? Math.min((returns / total) * 100, 100) : 0;
+
   return (
     <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 24px rgba(0,0,0,.07)", overflow: "hidden" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} className="calc-grid">
         <div style={{ padding: 36, borderRight: "1px solid #eee" }}>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 22, color: "var(--navy)", marginBottom: 6 }}>SIP Calculator</h2>
-          <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Estimate returns on your monthly SIP investments</p>
+          <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Estimate wealth accumulation on your monthly SIP investments</p>
           <RangeField label="Monthly Investment" id="sip-amt" min={500} max={100000} step={500} value={amt} onChange={setAmt} minLabel="₹500" maxLabel="₹1,00,000" unit="₹" />
-          <RangeField label="Expected Annual Return" id="sip-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} minLabel="1%" maxLabel="30%" unit="%" />
+          <RangeField label="Expected Annual Return (Rate)" id="sip-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} minLabel="1%" maxLabel="30%" unit="%" />
           <RangeField label="Investment Period" id="sip-years" min={1} max={40} step={1} value={years} onChange={setYears} minLabel="1 Yr" maxLabel="40 Yrs" unit="Yrs" />
+          <div style={{ marginTop: 20, padding: "14px 18px", background: "rgba(201,168,76,0.07)", borderRadius: 10, borderLeft: "3px solid var(--gold)" }}>
+            <div style={{ fontSize: 12, color: "var(--gray)", marginBottom: 4 }}>Key Financial Metrics</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Absolute Return</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{absReturnPct.toFixed(1)}%</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Expected Rate (XIRR)</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{xirrPct.toFixed(1)}%</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Total Instalments</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{n} months</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Wealth Multiplier</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{invested > 0 ? (total / invested).toFixed(2) : "1.00"}x</div></div>
+            </div>
+          </div>
         </div>
         <div style={{ padding: 36, background: "linear-gradient(160deg,var(--navy) 0%,#1a3560 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, color: "rgba(255,255,255,.5)", marginBottom: 6 }}>Total Value at Maturity</div>
-          <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 36, fontWeight: 700, color: "var(--gold)", marginBottom: 16 }}>{fmt(total)}</div>
-          <Donut pct={Math.min(gainPct / 3, 100)} label="Gain" />
+          <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 34, fontWeight: 700, color: "var(--gold)", marginBottom: 4 }}>{fmt(total)}</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,.6)", marginBottom: 14 }}>({fmtShort(total)})</div>
+          <Donut pct={donutPct} label="Returns Share" />
           <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
-            <ResultPill label="Total Invested" val={fmt(invested)} />
-            <ResultPill label="Est. Returns" val={fmt(returns)} valStyle={{ color: "var(--gold2)" }} />
+            <ResultPill label="Total Principal Invested" val={fmt(invested)} />
+            <ResultPill label="Est. Wealth Gain (Returns)" val={fmt(returns)} valStyle={{ color: "#86efac" }} />
+            <ResultPill label="Returns Share in Corpus" val={donutPct.toFixed(1) + "%"} valStyle={{ color: "var(--gold)" }} />
           </div>
         </div>
       </div>
       <div style={{ background: "var(--light)", padding: "16px 36px", fontSize: 12, color: "var(--gray)", lineHeight: 1.7, borderTop: "1px solid #e5e0d8" }}>
-        <strong style={{ color: "var(--navy)" }}>Formula:</strong> M = P × {"{[(1 + r)ⁿ – 1] / r} × (1 + r)"} | P = monthly amount, r = monthly rate, n = total months. Mutual fund investments are subject to market risks.
+        <strong style={{ color: "var(--navy)" }}>Formula:</strong> M = P × [(1+r)ⁿ – 1] / r × (1+r) | r = annual rate ÷ 12, n = years × 12. Standard SEBI/AMFI SIP compounding model.
       </div>
     </div>
   );
@@ -126,31 +158,52 @@ function LumpsumCalc() {
   const [amt, setAmt] = useState(100000);
   const [rate, setRate] = useState(12);
   const [years, setYears] = useState(10);
-  const total = amt * Math.pow(1 + rate / 100, years);
-  const returns = total - amt;
-  const gainPct = (returns / amt) * 100;
+
+  const safeAmt = Math.max(0, amt);
+  const safeYears = Math.max(1, years);
+  const safeRate = Math.max(0, rate);
+
+  // Standard Lumpsum compounding formula: A = P × (1 + r)^n
+  const total = safeAmt * Math.pow(1 + safeRate / 100, safeYears);
+  const returns = Math.max(0, total - safeAmt);
+  const gainPct = safeAmt > 0 ? (returns / safeAmt) * 100 : 0;
+  const cagr = safeRate;
+  const donutPct = total > 0 ? Math.min((returns / total) * 100, 100) : 0;
+  const doublingYears = safeRate > 0 ? Math.log(2) / Math.log(1 + safeRate / 100) : 0;
+
   return (
     <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 24px rgba(0,0,0,.07)", overflow: "hidden" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} className="calc-grid">
         <div style={{ padding: 36, borderRight: "1px solid #eee" }}>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 22, color: "var(--navy)", marginBottom: 6 }}>Lumpsum Calculator</h2>
-          <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Calculate the future value of a one-time investment</p>
+          <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Calculate the future value of a one-time capital investment</p>
           <RangeField label="Total Investment" id="lump-amt" min={5000} max={10000000} step={5000} value={amt} onChange={setAmt} minLabel="₹5,000" maxLabel="₹1 Cr" unit="₹" />
-          <RangeField label="Expected Annual Return" id="lump-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} minLabel="1%" maxLabel="30%" unit="%" />
+          <RangeField label="Expected Annual Return (CAGR)" id="lump-rate" min={1} max={30} step={0.5} value={rate} onChange={setRate} minLabel="1%" maxLabel="30%" unit="%" />
           <RangeField label="Investment Period" id="lump-years" min={1} max={40} step={1} value={years} onChange={setYears} minLabel="1 Yr" maxLabel="40 Yrs" unit="Yrs" />
+          <div style={{ marginTop: 20, padding: "14px 18px", background: "rgba(201,168,76,0.07)", borderRadius: 10, borderLeft: "3px solid var(--gold)" }}>
+            <div style={{ fontSize: 12, color: "var(--gray)", marginBottom: 4 }}>Key Financial Metrics</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Absolute Return</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{gainPct.toFixed(1)}%</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>CAGR</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{cagr.toFixed(2)}%</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Wealth Multiplier</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{safeAmt > 0 ? (total / safeAmt).toFixed(2) : "1.00"}x</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Doubles In</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{doublingYears > 0 ? doublingYears.toFixed(1) + " yrs" : "N/A"}</div></div>
+            </div>
+          </div>
         </div>
         <div style={{ padding: 36, background: "linear-gradient(160deg,var(--navy) 0%,#1a3560 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, color: "rgba(255,255,255,.5)", marginBottom: 6 }}>Total Value at Maturity</div>
-          <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 36, fontWeight: 700, color: "var(--gold)", marginBottom: 16 }}>{fmt(total)}</div>
-          <Donut pct={Math.min(gainPct / 3, 100)} label="Gain" />
+          <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 34, fontWeight: 700, color: "var(--gold)", marginBottom: 4 }}>{fmt(total)}</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,.6)", marginBottom: 14 }}>({fmtShort(total)})</div>
+          <Donut pct={donutPct} label="Returns Share" />
           <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
-            <ResultPill label="Initial Investment" val={fmt(amt)} />
-            <ResultPill label="Est. Returns" val={fmt(returns)} valStyle={{ color: "var(--gold2)" }} />
+            <ResultPill label="Principal Invested" val={fmt(safeAmt)} />
+            <ResultPill label="Est. Wealth Gain (Returns)" val={fmt(returns)} valStyle={{ color: "#86efac" }} />
+            <ResultPill label="Returns Share in Corpus" val={donutPct.toFixed(1) + "%"} valStyle={{ color: "var(--gold)" }} />
           </div>
         </div>
       </div>
       <div style={{ background: "var(--light)", padding: "16px 36px", fontSize: 12, color: "var(--gray)", lineHeight: 1.7, borderTop: "1px solid #e5e0d8" }}>
-        <strong style={{ color: "var(--navy)" }}>Formula:</strong> A = P × (1 + r/100)ⁿ | P = principal, r = annual rate %, n = years. Read all scheme-related documents carefully before investing.
+        <strong style={{ color: "var(--navy)" }}>Formula:</strong> A = P × (1 + r)ⁿ | P = principal, r = annual CAGR %, n = years. Standard SEBI compounding rule.
       </div>
     </div>
   );
@@ -160,34 +213,76 @@ function LoanCalc() {
   const [principal, setPrincipal] = useState(1000000);
   const [rate, setRate] = useState(8.5);
   const [years, setYears] = useState(20);
-  const r = rate / 100 / 12, n = years * 12;
-  const emi = principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+
+  const safePrincipal = Math.max(0, principal);
+  const safeYears = Math.max(1, years);
+  const safeRate = Math.max(0, rate);
+
+  // Standard reducing-balance EMI formula
+  const r = safeRate / 100 / 12; // monthly interest rate
+  const n = safeYears * 12;       // total months
+
+  let exactEmi = 0;
+  if (r === 0) {
+    exactEmi = n > 0 ? safePrincipal / n : 0;
+  } else {
+    const comp = Math.pow(1 + r, n);
+    exactEmi = (safePrincipal * r * comp) / (comp - 1);
+  }
+
+  // Banking standard: EMI rounded to nearest rupee
+  const emi = Math.round(exactEmi);
   const totalPay = emi * n;
-  const interest = totalPay - principal;
-  const intPct = (interest / totalPay) * 100;
+  const interest = Math.max(0, totalPay - safePrincipal);
+  const intPct = totalPay > 0 ? (interest / totalPay) * 100 : 0;
+  const prinPct = totalPay > 0 ? (safePrincipal / totalPay) * 100 : 0;
+
+  // Exact Month when cumulative Principal repaid reaches 50%
+  let balance = safePrincipal;
+  let monthHalfway = n;
+  for (let m = 1; m <= n; m++) {
+    const intComp = balance * r;
+    const prinComp = emi - intComp;
+    balance = Math.max(0, balance - prinComp);
+    if (balance <= safePrincipal / 2 && monthHalfway === n) {
+      monthHalfway = m;
+    }
+  }
+  const halfwayYear = Math.ceil(monthHalfway / 12);
+
   return (
     <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 24px rgba(0,0,0,.07)", overflow: "hidden" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }} className="calc-grid">
         <div style={{ padding: 36, borderRight: "1px solid #eee" }}>
           <h2 style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 22, color: "var(--navy)", marginBottom: 6 }}>Loan / EMI Calculator</h2>
-          <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Calculate your monthly EMI for any loan</p>
+          <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 28 }}>Calculate your exact monthly EMI and interest schedule for home, car, or personal loans</p>
           <RangeField label="Loan Amount" id="loan-amt" min={10000} max={10000000} step={10000} value={principal} onChange={setPrincipal} minLabel="₹10,000" maxLabel="₹1 Cr" unit="₹" />
           <RangeField label="Annual Interest Rate" id="loan-rate" min={1} max={24} step={0.1} value={rate} onChange={setRate} minLabel="1%" maxLabel="24%" unit="%" />
           <RangeField label="Loan Tenure" id="loan-years" min={1} max={30} step={1} value={years} onChange={setYears} minLabel="1 Yr" maxLabel="30 Yrs" unit="Yrs" />
+          <div style={{ marginTop: 20, padding: "14px 18px", background: "rgba(255,80,80,0.05)", borderRadius: 10, borderLeft: "3px solid #f87171" }}>
+            <div style={{ fontSize: 12, color: "var(--gray)", marginBottom: 4 }}>Loan Insights</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Interest Share</div><div style={{ fontSize: 15, fontWeight: 700, color: "#dc2626" }}>{intPct.toFixed(1)}%</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Principal Share</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>{prinPct.toFixed(1)}%</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>50% Principal Paid By</div><div style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>Year {halfwayYear}</div></div>
+              <div><div style={{ fontSize: 11, color: "var(--gray)" }}>Effective Interest Burden</div><div style={{ fontSize: 15, fontWeight: 700, color: "#dc2626" }}>{safePrincipal > 0 ? ((interest / safePrincipal) * 100).toFixed(1) : 0}%</div></div>
+            </div>
+          </div>
         </div>
         <div style={{ padding: 36, background: "linear-gradient(160deg,var(--navy) 0%,#1a3560 100%)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
           <div style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: 1.5, color: "rgba(255,255,255,.5)", marginBottom: 6 }}>Monthly EMI</div>
-          <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 36, fontWeight: 700, color: "var(--gold)", marginBottom: 16 }}>{fmt(emi)}</div>
-          <Donut pct={intPct} label="Interest" />
+          <div style={{ fontFamily: "var(--font-playfair,serif)", fontSize: 34, fontWeight: 700, color: "var(--gold)", marginBottom: 4 }}>{fmt(emi)}</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,.6)", marginBottom: 14 }}>({fmtShort(emi)} / mo)</div>
+          <Donut pct={intPct} label="Interest Share" />
           <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
-            <ResultPill label="Total Payment" val={fmt(totalPay)} />
-            <ResultPill label="Total Interest" val={fmt(interest)} valStyle={{ color: "#ff9a9a" }} />
-            <ResultPill label="Principal" val={fmt(principal)} />
+            <ResultPill label="Total Loan Repayment" val={fmt(totalPay)} />
+            <ResultPill label="Total Interest Payable" val={fmt(interest)} valStyle={{ color: "#ff9a9a" }} />
+            <ResultPill label="Principal Loan Amount" val={fmt(safePrincipal)} />
           </div>
         </div>
       </div>
       <div style={{ background: "var(--light)", padding: "16px 36px", fontSize: 12, color: "var(--gray)", lineHeight: 1.7, borderTop: "1px solid #e5e0d8" }}>
-        <strong style={{ color: "var(--navy)" }}>Formula:</strong> EMI = P × r × (1+r)ⁿ / [(1+r)ⁿ – 1] | P = loan amount, r = monthly interest rate, n = total months.
+        <strong style={{ color: "var(--navy)" }}>Formula:</strong> EMI = [P × r × (1+r)ⁿ] ÷ [(1+r)ⁿ – 1] | Reducing balance method as mandated by RBI for Indian Banks & NBFCs.
       </div>
     </div>
   );
